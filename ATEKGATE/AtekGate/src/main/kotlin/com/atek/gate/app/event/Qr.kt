@@ -5,7 +5,8 @@ import Kafka.dataConsumer
 import com.atek.gate.data.model.QrData
 import com.atek.gate.utils.GCrypt
 import com.google.gson.GsonBuilder
-
+import org.json.JSONObject
+import org.json.JSONString
 object manager {
     fun runner() {
         while (true) {
@@ -14,11 +15,12 @@ object manager {
             val encodedData = readLine()
             if (encodedData != null) {
                 val qrData = decodeHandler(encodedData)
-                dataConsumer = qrData
-                println(qrData)
+
+                if (qrData != null) {
+                    dataConsumer = qrData
+                }
                 break
             } else {
-                println("Invalid data ?")
             }
         }
     }
@@ -30,23 +32,16 @@ object manager {
             .create()
         lateinit var qrData: QrData
         if (encodedData != null) {
-            println("success")
             val encodedDataArray = encodedData.trim().split('~')
             val decodedDataArray = arrayOfNulls<String>(2)
             try {
-                println("now")
                 val temDecodedData = GCrypt.decrypt(
                     encodedDataArray[0],
                     1
                 )
                 val x: String
                 if (temDecodedData != null) {
-                    println("here")
                     decodedDataArray[0] = String(temDecodedData).trim()
-                    println("destroying")
-                    println(decodedDataArray[0])
-                    println("falling")
-
 
                     val qrData = decodedDataArray[0]!!
 
@@ -54,7 +49,6 @@ object manager {
 //                var data= gson.fromJson(qrData,QrData::class.java)
 //println(data.d)
 //                println(data)
-                    println("down")
                     if (encodedDataArray.size > 1) {
 
                         var encodedDateTime = encodedDataArray[encodedDataArray.size - 1]

@@ -23,7 +23,7 @@ class MainActivity : AtekGate() {
     init {
         console.box("ATEK GATE INITIATED")
         runner()
-        senderAndReciver()
+       senderAndReciver()
         //main function for running the kafka producer and consumer
 
         //Registering MainActivity for future events

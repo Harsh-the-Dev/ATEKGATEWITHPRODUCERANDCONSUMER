@@ -50,6 +50,9 @@ dependencies {
     //databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.9.8")
 
+    //json
+    implementation("org.json:json:20220320")
+
 }
 
 tasks.withType<KotlinCompile> {
